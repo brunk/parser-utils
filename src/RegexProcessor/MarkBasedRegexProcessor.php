@@ -8,14 +8,13 @@ use RuntimeException;
 use Yosymfony\ParserUtils\SyntaxErrorException;
 
 class MarkBasedRegexProcessor implements RegexProcessorInterface {
-
     public const RECOGNIZED_REGEX_DELIMITERS = '/!#%&,:;=@_~-';
     /**
      * @var string
      */
     protected $compiledRegex;
     protected $additionalModifiers = '';
-
+    protected $tokenIndex = [];
 
     /**
      * @inheritDoc
@@ -35,17 +34,21 @@ class MarkBasedRegexProcessor implements RegexProcessorInterface {
 
     protected function compileRegex($terminals): void {
         $regexes = [];
-
+        $counter = 0;
+        // map MARKs to integers to reduce memory used
+        // latter by preg_match
         foreach ($terminals as $regex => $token) {
             $regex = $this->cleanRegex($regex);
-            $regexes[] = $regex . '(*MARK:' . $token . ')';
+            $this->tokenIndex[$counter] = $token;
+            $regexes[] = $regex . '(*MARK:' . $counter . ')';
+            $counter++;
         }
 
         $this->compiledRegex =
             '~(?|'
             . $this->escapeDelimiter(implode('|', $regexes))
             . ')~A' // force anchored search
-            ;
+        ;
     }
 
     protected function cleanRegex ($regex) : string {
@@ -87,6 +90,8 @@ class MarkBasedRegexProcessor implements RegexProcessorInterface {
         $regex = $this->compiledRegex . $this->additionalModifiers;
 
         if (preg_match($regex, substr($text, $offset), $matches)) {
+            // map tokenIndex to full TOKEN Name
+            $matches['MARK'] = $this->tokenIndex[$matches['MARK']];
             return $matches;
         }
 

@@ -143,7 +143,7 @@ class MarkBasedLexerTest extends TestCase
         self::assertFalse($ts->hasPendingTokens());
     }
 
-    public function testLargeSetOfRulesWith () {
+    public function testLargeSetOfRulesWith (): void {
         $lexer = LexerFactory::createMarkBased(self::TomlLexer);
         $lexer
             ->generateNewlineTokens()

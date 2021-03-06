@@ -16,8 +16,7 @@ use Yosymfony\ParserUtils\Token;
 
 class BasicLexerTest extends TestCase
 {
-    public function testTokenizeMustReturnsTheListOfTokens()
-    {
+    public function testTokenizeMustReturnsTheListOfTokens(): void {
         $lexer = new BasicLexer([
             '/^([0-9]+)/x' => 'T_NUMBER',
             '/^(\+)/x' => 'T_PLUS',
@@ -25,15 +24,14 @@ class BasicLexerTest extends TestCase
         ]);
         $tokens = $lexer->tokenize('1+2')->getAll();
 
-        $this->assertEquals([
+        self::assertEquals([
             new Token('1', 'T_NUMBER', 1),
             new Token('+', 'T_PLUS', 1),
             new Token('2', 'T_NUMBER', 1),
         ], $tokens);
     }
 
-    public function testTokenizeMustReturnsTheListOfTokensWithoutThoseDoNotHaveParenthesizedSupatternInTerminalSymbols()
-    {
+    public function testTokenizeMustReturnsTheListOfTokensWithoutThoseDoNotHaveParenthesizedSupatternInTerminalSymbols(): void {
         $lexer = new BasicLexer([
             '/^([0-9]+)/' => 'T_NUMBER',
             '/^(\+)/' => 'T_PLUS',
@@ -43,15 +41,14 @@ class BasicLexerTest extends TestCase
 
         $tokens = $lexer->tokenize('1 + 2')->getAll();
 
-        $this->assertEquals([
+        self::assertEquals([
             new Token('1', 'T_NUMBER', 1),
             new Token('+', 'T_PLUS', 1),
             new Token('2', 'T_NUMBER', 1),
         ], $tokens, 'T_SPACE is not surround with (). e.g: ^(\s+)');
     }
 
-    public function testTokenizeWithEmptyStringMustReturnsZeroTokens()
-    {
+    public function testTokenizeWithEmptyStringMustReturnsZeroTokens(): void {
         $lexer = new BasicLexer([
             '/^([0-9]+)/' => 'T_NUMBER',
             '/^(\+)/' => 'T_PLUS',
@@ -60,11 +57,10 @@ class BasicLexerTest extends TestCase
 
         $tokens = $lexer->tokenize('')->getAll();
 
-        $this->assertCount(0, $tokens);
+        self::assertCount(0, $tokens);
     }
 
-    public function testTokenizeMustReturnsNewLineTokensWhenGenerateNewlineTokensIsEnabled()
-    {
+    public function testTokenizeMustReturnsNewLineTokensWhenGenerateNewlineTokensIsEnabled(): void {
         $lexer = new BasicLexer([
             '/^([0-9]+)/' => 'T_NUMBER',
         ]);
@@ -74,12 +70,11 @@ class BasicLexerTest extends TestCase
         $ts->moveNext();
         $token = $ts->moveNext();
 
-        $this->assertEquals('T_NEWLINE', $token->getName());
-        $this->assertFalse($ts->hasPendingTokens());
+        self::assertEquals('T_NEWLINE', $token->getName());
+        self::assertFalse($ts->hasPendingTokens());
     }
 
-    public function testTokenizeMustReturnsCustomNewLineTokensWhenThereIsCustomNameAndGenerateNewlineTokensIsEnabled()
-    {
+    public function testTokenizeMustReturnsCustomNewLineTokensWhenThereIsCustomNameAndGenerateNewlineTokensIsEnabled(): void {
         $lexer = new BasicLexer([
             '/^([0-9]+)/' => 'T_NUMBER',
         ]);
@@ -90,12 +85,11 @@ class BasicLexerTest extends TestCase
         $ts->moveNext();
         $token = $ts->moveNext();
 
-        $this->assertEquals('T_MY_NEWLINE', $token->getName());
-        $this->assertFalse($ts->hasPendingTokens());
+        self::assertEquals('T_MY_NEWLINE', $token->getName());
+        self::assertFalse($ts->hasPendingTokens());
     }
 
-    public function testTokenizeMustReturnsEosTokenWhenGenerateEosTokenIsEnabled()
-    {
+    public function testTokenizeMustReturnsEosTokenWhenGenerateEosTokenIsEnabled(): void {
         $lexer = new BasicLexer([
             '/^([0-9]+)/' => 'T_NUMBER',
         ]);
@@ -105,12 +99,11 @@ class BasicLexerTest extends TestCase
         $ts->moveNext();
         $token = $ts->moveNext();
 
-        $this->assertEquals('T_EOS', $token->getName());
-        $this->assertFalse($ts->hasPendingTokens());
+        self::assertEquals('T_EOS', $token->getName());
+        self::assertFalse($ts->hasPendingTokens());
     }
 
-    public function testTokenizeMustReturnsCustomNameEosTokenWhenThereIsCustomNameAndGenerateEosTokenIsEnabled()
-    {
+    public function testTokenizeMustReturnsCustomNameEosTokenWhenThereIsCustomNameAndGenerateEosTokenIsEnabled(): void {
         $lexer = new BasicLexer([
             '/^([0-9]+)/' => 'T_NUMBER',
         ]);
@@ -121,7 +114,7 @@ class BasicLexerTest extends TestCase
         $ts->moveNext();
         $token = $ts->moveNext();
 
-        $this->assertEquals('T_MY_EOS', $token->getName());
-        $this->assertFalse($ts->hasPendingTokens());
+        self::assertEquals('T_MY_EOS', $token->getName());
+        self::assertFalse($ts->hasPendingTokens());
     }
 }

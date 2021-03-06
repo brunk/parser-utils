@@ -143,7 +143,7 @@ class SimpleLexerTest extends TestCase
         self::assertFalse($ts->hasPendingTokens());
     }
 
-    public function testLargeSetOfRulesWith () {
+    public function testLargeSetOfRulesWith (): void {
         $lexer = LexerFactory::createSimple(self::TomlLexer);
         $lexer
             ->generateNewlineTokens()

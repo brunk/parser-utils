@@ -12,7 +12,6 @@ namespace Yosymfony\ParserUtils\Test;
 
 use PHPUnit\Framework\TestCase;
 use Yosymfony\ParserUtils\LexerFactory;
-use Yosymfony\ParserUtils\MarkBasedFileLexer;
 use Yosymfony\ParserUtils\Token;
 
 class SimpleFileLexerTest extends TestCase
@@ -122,7 +121,7 @@ class SimpleFileLexerTest extends TestCase
         $lexer->tokenize("JUNK.FILE.txt");
     }
 
-    public function testLargeSetOfRulesWith () {
+    public function testLargeSetOfRulesWith (): void {
         $lexer = LexerFactory::createSimpleFile(self::TomlLexer);
         $lexer
             ->generateNewlineTokens()

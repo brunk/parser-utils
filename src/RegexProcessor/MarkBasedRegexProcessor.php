@@ -26,9 +26,7 @@ class MarkBasedRegexProcessor implements RegexProcessorInterface {
 
 
     /**
-     * Sets additionalModifiers to add to the regular expression
-     *
-     * @param string $additionalModifiers
+     * @inheritDoc
      *
      */
     public function setAdditionalModifiers(string $additionalModifiers): void {

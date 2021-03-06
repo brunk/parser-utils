@@ -13,10 +13,10 @@ interface RegexProcessorInterface {
     /**
      * Required setter but may be ignored in some processors
      *
-     * @param string $text
+     * @param string $additionalModifiers
      * @return mixed
      */
-    public function setAdditionalModifiers(string $text);
+    public function setAdditionalModifiers(string $additionalModifiers);
 
     /**
      * @param string $text full line of text to evaluate

@@ -43,7 +43,7 @@ class SimpleRegexProcessor implements RegexProcessorInterface {
     /**
      * @inheritDoc
      */
-    public function setAdditionalModifiers(string $text) {
+    public function setAdditionalModifiers(string $additionalModifiers) {
         // Ignore the value since modifiers are added to individual regex
     }
 }

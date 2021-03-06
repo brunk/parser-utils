@@ -13,6 +13,7 @@ class Lexer extends AbstractLexer {
         $counter = 0;
         $tokens = [];
         $lines = explode("\n", $input);
+        unset($input);
         $totalLines = count($lines);
         $lineNumber = 1;
         foreach ($lines as $number => $line) {

@@ -40,7 +40,7 @@ class TokenStream implements TokenStreamInterface
         $token = $this->moveNext();
         --$this->index;
 
-        if ($token->getName() == $tokenName) {
+        if ($token->getName() === $tokenName) {
             return $this->moveNext()->getValue();
         }
 
@@ -82,7 +82,7 @@ class TokenStream implements TokenStreamInterface
             return false;
         }
 
-        return $token->getName() == $tokenName;
+        return $token->getName() === $tokenName;
     }
 
     /**
@@ -96,7 +96,7 @@ class TokenStream implements TokenStreamInterface
         foreach ($tokenNames as $tokenName) {
             $token = $this->moveNext();
 
-            if ($token === null || $token->getName() != $tokenName) {
+            if ($token === null || $token->getName() !== $tokenName) {
                 $result = false;
 
                 break;
@@ -146,7 +146,7 @@ class TokenStream implements TokenStreamInterface
     {
         $tokenCount = count($this->tokens);
 
-        if ($tokenCount == 0) {
+        if ($tokenCount === 0) {
             return false;
         }
 

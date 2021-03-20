@@ -33,7 +33,7 @@ class SimpleRegexProcessor implements RegexProcessorInterface {
         throw new SyntaxErrorException(
             sprintf(
                 'Lexer error: unable to parse character "%s" at line %d, char %d.',
-                $text,
+                substr($text, $offset),
                 $lineNum,
                 $offset
             )

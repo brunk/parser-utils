@@ -35,12 +35,22 @@ class TokenStream implements TokenStreamInterface
     /**
      * {@inheritdoc}
      */
+    public function peekNext() : ?Token
+    {
+        return $this->tokens[$this->index + 1] ?? null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function matchNext(string $tokenName) : string
     {
-        $token = $this->moveNext();
-        --$this->index;
+        $token = $this->peekNext();
 
-        if ($token->getName() === $tokenName) {
+        if (
+            $token !== null
+            && $token->getName() === $tokenName
+        ) {
             return $this->moveNext()->getValue();
         }
 
@@ -75,8 +85,7 @@ class TokenStream implements TokenStreamInterface
      */
     public function isNext(string $tokenName) : bool
     {
-        $token = $this->moveNext();
-        --$this->index;
+        $token = $this->peekNext();
 
         if ($token === null) {
             return false;
@@ -113,17 +122,14 @@ class TokenStream implements TokenStreamInterface
      */
     public function isNextAny(array $tokenNames) : bool
     {
-        $token = $this->moveNext();
-        --$this->index;
+        $token = $this->peekNext();
 
         if ($token === null) {
             return false;
         }
 
-        foreach ($tokenNames as $tokenName) {
-            if ($tokenName === $token->getName()) {
-                return true;
-            }
+        if (in_array($token->getName(), $tokenNames, true)) {
+            return true;
         }
 
         return false;

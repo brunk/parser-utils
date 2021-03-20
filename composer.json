@@ -17,7 +17,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Yosymfony\\ParserUtils\\": "src/",
+            "Yosymfony\\ParserUtils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Yosymfony\\ParserUtils\\Test\\": "tests/"
         }
     },

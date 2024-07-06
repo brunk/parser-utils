@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Yosymfony\ParserUtils package.
+ * This file is part of the Brunk\ParserUtils package.
  *
  * (c) YoSymfony <http://github.com/yosymfony>
  *
@@ -8,12 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Yosymfony\ParserUtils\Test;
+namespace Brunk\ParserUtils\Test;
 
 use PHPUnit\Framework\TestCase;
-use Yosymfony\ParserUtils\SyntaxErrorException;
-use Yosymfony\ParserUtils\Token;
-use Yosymfony\ParserUtils\TokenStream;
+use Brunk\ParserUtils\SyntaxErrorException;
+use Brunk\ParserUtils\Token;
+use Brunk\ParserUtils\TokenStream;
 
 class TokenStreamTest extends TestCase
 {

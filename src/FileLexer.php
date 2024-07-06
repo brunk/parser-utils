@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Yosymfony\ParserUtils;
+namespace Brunk\ParserUtils;
 
 
 use RuntimeException;
@@ -10,7 +10,7 @@ class FileLexer extends AbstractLexer {
 
     /**
      * @param string $input Path to file
-     * @return \Yosymfony\ParserUtils\TokenStream
+     * @return \Brunk\ParserUtils\TokenStream
      */
     public function tokenize(string $input) : TokenStream {
         $tokens = [];

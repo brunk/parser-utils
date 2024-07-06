@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Yosymfony\ParserUtils\RegexProcessor;
+namespace Brunk\ParserUtils\RegexProcessor;
 
 interface RegexProcessorInterface {
     /**

@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Yosymfony\ParserUtils package.
+ * This file is part of the Brunk\ParserUtils package.
  *
  * (c) YoSymfony <http://github.com/yosymfony>
  *
@@ -8,13 +8,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Yosymfony\ParserUtils\Test;
+namespace Brunk\ParserUtils\Test;
 
 use PHPUnit\Framework\TestCase;
-use Yosymfony\ParserUtils\AbstractParser;
-use Yosymfony\ParserUtils\BasicLexer;
-use Yosymfony\ParserUtils\SyntaxErrorException;
-use Yosymfony\ParserUtils\TokenStream;
+use Brunk\ParserUtils\AbstractParser;
+use Brunk\ParserUtils\BasicLexer;
+use Brunk\ParserUtils\SyntaxErrorException;
+use Brunk\ParserUtils\TokenStream;
 
 class AbstractParserTest extends TestCase
 {

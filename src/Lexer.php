@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Yosymfony\ParserUtils;
+namespace Brunk\ParserUtils;
 
 
 class Lexer extends AbstractLexer {

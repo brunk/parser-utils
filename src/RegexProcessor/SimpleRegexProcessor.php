@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Yosymfony\ParserUtils\RegexProcessor;
+namespace Brunk\ParserUtils\RegexProcessor;
 
 
-use Yosymfony\ParserUtils\SyntaxErrorException;
+use Brunk\ParserUtils\SyntaxErrorException;
 
 class SimpleRegexProcessor implements RegexProcessorInterface {
     /**

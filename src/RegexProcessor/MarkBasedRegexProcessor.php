@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Yosymfony\ParserUtils\RegexProcessor;
+namespace Brunk\ParserUtils\RegexProcessor;
 
 
 use RuntimeException;
-use Yosymfony\ParserUtils\SyntaxErrorException;
+use Brunk\ParserUtils\SyntaxErrorException;
 
 class MarkBasedRegexProcessor implements RegexProcessorInterface {
     public const RECOGNIZED_REGEX_DELIMITERS = '/!#%&,:;=@_~-';

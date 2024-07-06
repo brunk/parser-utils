@@ -1,6 +1,6 @@
 {
-    "name": "yosymfony/parser-utils",
-    "description": "Parser utilities",
+    "name": "brunk/parser-utils",
+    "description": "Parser utilities based on yosymfony/parser-utils",
     "type": "library",
     "keywords": ["parser", "lexer"],
     "homepage": "http://github.com/yosymfony/toml",
@@ -10,30 +10,28 @@
             "name": "Victor Puertas",
             "email": "vpgugr@gmail.com",
             "homepage": "http://yosymfony.com"
+        },
+        {
+            "name": "Douglas Brunk",
+            "email": "brunk@upenn.edu"
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": ">=8.0"
     },
     "autoload": {
         "psr-4": {
-            "Yosymfony\\ParserUtils\\": "src/"
+            "Brunk\\ParserUtils\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yosymfony\\ParserUtils\\Test\\": "tests/"
+            "Brunk\\ParserUtils\\Test\\": "tests/"
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.0-dev"
         }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8"
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit"
     }
 }

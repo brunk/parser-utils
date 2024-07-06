@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Yosymfony\ParserUtils;
+namespace Brunk\ParserUtils;
 
 
-use Yosymfony\ParserUtils\RegexProcessor\MarkBasedRegexProcessor;
-use Yosymfony\ParserUtils\RegexProcessor\RegexProcessorInterface;
-use Yosymfony\ParserUtils\RegexProcessor\SimpleRegexProcessor;
+use Brunk\ParserUtils\RegexProcessor\MarkBasedRegexProcessor;
+use Brunk\ParserUtils\RegexProcessor\RegexProcessorInterface;
+use Brunk\ParserUtils\RegexProcessor\SimpleRegexProcessor;
 
 class LexerFactory {
 

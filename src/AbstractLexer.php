@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Yosymfony\ParserUtils;
+namespace Brunk\ParserUtils;
 
 use InvalidArgumentException;
-use Yosymfony\ParserUtils\RegexProcessor\RegexProcessorInterface;
+use Brunk\ParserUtils\RegexProcessor\RegexProcessorInterface;
 
 abstract class AbstractLexer implements LexerInterface {
     protected $eosTokenName = 'T_EOS';
@@ -16,7 +16,7 @@ abstract class AbstractLexer implements LexerInterface {
     /**
      * Constructor
      *
-     * @param \Yosymfony\ParserUtils\RegexProcessor\RegexProcessorInterface $regexProcessor
+     * @param \Brunk\ParserUtils\RegexProcessor\RegexProcessorInterface $regexProcessor
      */
     public function __construct(RegexProcessorInterface $regexProcessor) {
         $this->regexProcessor = $regexProcessor;
@@ -91,7 +91,7 @@ abstract class AbstractLexer implements LexerInterface {
     }
 
     /**
-     * @return array|\Yosymfony\ParserUtils\RegexProcessor\RegexProcessorInterface
+     * @return array|\Brunk\ParserUtils\RegexProcessor\RegexProcessorInterface
      */
     public function getRegexProcessor() : RegexProcessorInterface {
         return $this->regexProcessor;

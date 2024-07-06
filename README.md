@@ -37,10 +37,11 @@ that receives a `TokenStream` as an argument.
 
 ```php
 use Brunk\ParserUtils\AbstractParser;
+use Brunk\ParserUtils\TokenStream;
 
 class Parser extends AbstractParser
 {
-    protected function parseImplementation(TokenStream $stream)
+    protected function parseImplementation(TokenStream $stream) : string
     {
         $result = $stream->matchNext('T_NUMBER');
 
@@ -54,7 +55,6 @@ class Parser extends AbstractParser
                     break;
                 default:
                     throw new SyntaxErrorException("Something went wrong");
-                    break;
             }
         }
 
@@ -96,6 +96,20 @@ $lexer->generateEosToken()
 
 $lexer->tokenize('...');
 ```
+
+### The Lexer class
+
+### The FileLexer class
+
+### The LexerFactory class
+
+### The RegexProcessor classes
+https://www.npopov.com/2011/10/23/Improving-lexing-performance-in-PHP.html
+
+https://www.npopov.com/2014/02/18/Fast-request-routing-using-regular-expressions.html
+
+https://github.com/nikic/Phlexy
+
 
 ### The TokenStream class
 

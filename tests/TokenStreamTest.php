@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Yosymfony\ParserUtils package.
+ * This file is part of the Brunk\ParserUtils package.
  *
  * (c) YoSymfony <http://github.com/yosymfony>
  *
@@ -8,37 +8,34 @@
  * file that was distributed with this source code.
  */
 
-namespace Yosymfony\ParserUtils\Test;
+namespace Brunk\ParserUtils\Test;
 
 use PHPUnit\Framework\TestCase;
-use Yosymfony\ParserUtils\SyntaxErrorException;
-use Yosymfony\ParserUtils\Token;
-use Yosymfony\ParserUtils\TokenStream;
+use Brunk\ParserUtils\SyntaxErrorException;
+use Brunk\ParserUtils\Token;
+use Brunk\ParserUtils\TokenStream;
 
 class TokenStreamTest extends TestCase
 {
-    public function testGetAllMustReturnsAllTokens()
-    {
+    public function testGetAllMustReturnsAllTokens(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
         ]);
 
-        $this->assertCount(2, $ts->getAll());
+        self::assertCount(2, $ts->getAll());
     }
 
-    public function testMoveNextMustReturnsTheFirstTokenTheFirstTime()
-    {
+    public function testMoveNextMustReturnsTheFirstTokenTheFirstTime(): void {
         $token = new Token('+', 'T_PLUS', 1);
         $ts = new TokenStream([
             $token,
         ]);
 
-        $this->assertEquals($token, $ts->moveNext());
+        self::assertEquals($token, $ts->moveNext());
     }
 
-    public function testMoveNextMustReturnsTheSecondTokenTheSecondTime()
-    {
+    public function testMoveNextMustReturnsTheSecondTokenTheSecondTime(): void {
         $token = new Token('1', 'T_NUMBER', 1);
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
@@ -46,21 +43,19 @@ class TokenStreamTest extends TestCase
         ]);
         $ts->moveNext();
 
-        $this->assertEquals($token, $ts->moveNext());
+        self::assertEquals($token, $ts->moveNext());
     }
 
-    public function testMoveNextMustReturnsWhenThereAreNotMoreTokens()
-    {
+    public function testMoveNextMustReturnsWhenThereAreNotMoreTokens(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
         ]);
         $ts->moveNext();
 
-        $this->assertNull($ts->moveNext());
+        self::assertNull($ts->moveNext());
     }
 
-    public function testMoveNextMustReturnsTheFirstTokenAfterAReset()
-    {
+    public function testMoveNextMustReturnsTheFirstTokenAfterAReset(): void {
         $token = new Token('1', 'T_NUMBER', 1);
         $ts = new TokenStream([
             $token,
@@ -71,21 +66,19 @@ class TokenStreamTest extends TestCase
 
         $ts->reset();
 
-        $this->assertEquals($token, $ts->moveNext());
+        self::assertEquals($token, $ts->moveNext());
     }
 
-    public function testMatchNextMustReturnMatchValueWhenTheNameOfNextTokenMatchWithTheNamePassed()
-    {
+    public function testMatchNextMustReturnMatchValueWhenTheNameOfNextTokenMatchWithTheNamePassed(): void {
         $token = new Token('1', 'T_NUMBER', 1);
         $ts = new TokenStream([
             $token,
         ]);
 
-        $this->assertEquals('1', $ts->matchNext('T_NUMBER'));
+        self::assertEquals('1', $ts->matchNext('T_NUMBER'));
     }
 
-    public function testMatchNextMustThrowExceptionWhenTheNameOfNextTokenDoesNotMatchWithTheNamePassed()
-    {
+    public function testMatchNextMustThrowExceptionWhenTheNameOfNextTokenDoesNotMatchWithTheNamePassed(): void {
         $this->expectException(SyntaxErrorException::class);
         $this->expectExceptionMessage('Syntax error: expected token with name "T_PLUS" instead of "T_NUMBER" at line 1.');
 
@@ -97,8 +90,7 @@ class TokenStreamTest extends TestCase
         $ts->matchNext('T_PLUS');
     }
 
-    public function testIsNextMustReturnsTrueWhenTheNameOfNextTokenMatchWithTheNamePassed()
-    {
+    public function testIsNextMustReturnsTrueWhenTheNameOfNextTokenMatchWithTheNamePassed(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
@@ -106,31 +98,28 @@ class TokenStreamTest extends TestCase
 
         $ts->moveNext();
 
-        $this->assertTrue($ts->isNext('T_NUMBER'));
+        self::assertTrue($ts->isNext('T_NUMBER'));
     }
 
-    public function testIsNextMustReturnsTrueWhenTheNameOfNextTokenMatchWithTheNamePassedAtTheBeginning()
-    {
+    public function testIsNextMustReturnsTrueWhenTheNameOfNextTokenMatchWithTheNamePassedAtTheBeginning(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
         ]);
 
-        $this->assertTrue($ts->isNext('T_PLUS'));
+        self::assertTrue($ts->isNext('T_PLUS'));
     }
 
-    public function testIsNextMustReturnsFalseWhenTheNameOfNextTokenDoesNotMatchWithTheNamePassed()
-    {
+    public function testIsNextMustReturnsFalseWhenTheNameOfNextTokenDoesNotMatchWithTheNamePassed(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
         ]);
 
-        $this->assertFalse($ts->isNext('T_NUMBER'));
+        self::assertFalse($ts->isNext('T_NUMBER'));
     }
 
-    public function testIsNextMustNotAlterTheTokenStream()
-    {
+    public function testIsNextMustNotAlterTheTokenStream(): void {
         $token = new Token('+', 'T_PLUS', 1);
         $ts = new TokenStream([
             $token,
@@ -138,31 +127,28 @@ class TokenStreamTest extends TestCase
         ]);
         $ts->isNext('T_PLUS');
 
-        $this->assertEquals($token, $ts->moveNext(), 'The next token must be T_PLUS');
+        self::assertEquals($token, $ts->moveNext(), 'The next token must be T_PLUS');
     }
 
-    public function testIsNextSequenceMustReturnTrueWhenTheFollowingTokensInTheStreamMatchWithSequence()
-    {
+    public function testIsNextSequenceMustReturnTrueWhenTheFollowingTokensInTheStreamMatchWithSequence(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
         ]);
 
-        $this->assertTrue($ts->isNextSequence(['T_PLUS', 'T_NUMBER']));
+        self::assertTrue($ts->isNextSequence(['T_PLUS', 'T_NUMBER']));
     }
 
-    public function testIsNextSequenceMustReturnFalseWhenTheFollowingTokensInTheStreamDoesNotMatchWithSequence()
-    {
+    public function testIsNextSequenceMustReturnFalseWhenTheFollowingTokensInTheStreamDoesNotMatchWithSequence(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
         ]);
 
-        $this->assertFalse($ts->isNextSequence(['T_NUMBER', 'T_PLUS']));
+        self::assertFalse($ts->isNextSequence(['T_NUMBER', 'T_PLUS']));
     }
 
-    public function testIsNextSequenceMustNotAlterTheTokenStream()
-    {
+    public function testIsNextSequenceMustNotAlterTheTokenStream(): void {
         $token = new Token('+', 'T_PLUS', 1);
         $ts = new TokenStream([
             $token,
@@ -170,31 +156,28 @@ class TokenStreamTest extends TestCase
         ]);
         $ts->isNextSequence(['T_NUMBER', 'T_PLUS']);
 
-        $this->assertEquals($token, $ts->moveNext(), 'The next token must be T_PLUS');
+        self::assertEquals($token, $ts->moveNext(), 'The next token must be T_PLUS');
     }
 
-    public function testIsNextAnyMustReturnTrueWhenNameOfNextTokenMatchWithOneOfTheList()
-    {
+    public function testIsNextAnyMustReturnTrueWhenNameOfNextTokenMatchWithOneOfTheList(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
         ]);
 
-        $this->assertTrue($ts->isNextAny(['T_MINUS', 'T_PLUS']));
+        self::assertTrue($ts->isNextAny(['T_MINUS', 'T_PLUS']));
     }
 
-    public function testIsNextAnyMustReturnFalseWhenNameOfNextTokenDoesNotMatchWithOneOfTheList()
-    {
+    public function testIsNextAnyMustReturnFalseWhenNameOfNextTokenDoesNotMatchWithOneOfTheList(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('1', 'T_NUMBER', 1),
         ]);
 
-        $this->assertFalse($ts->isNextAny(['T_DIV', 'T_MINUS']));
+        self::assertFalse($ts->isNextAny(['T_DIV', 'T_MINUS']));
     }
 
-    public function testIsNextAnyMustNotAlterTheTokenStream()
-    {
+    public function testIsNextAnyMustNotAlterTheTokenStream(): void {
         $token = new Token('+', 'T_PLUS', 1);
         $ts = new TokenStream([
             $token,
@@ -202,38 +185,34 @@ class TokenStreamTest extends TestCase
         ]);
         $ts->isNextAny(['T_MINUS', 'T_PLUS']);
 
-        $this->assertEquals($token, $ts->moveNext(), 'The next token must be T_PLUS');
+        self::assertEquals($token, $ts->moveNext(), 'The next token must be T_PLUS');
     }
 
-    public function testHasPendingTokensMustReturnTrueWhenThereArePendingTokens()
-    {
+    public function testHasPendingTokensMustReturnTrueWhenThereArePendingTokens(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
         ]);
 
-        $this->assertTrue($ts->hasPendingTokens());
+        self::assertTrue($ts->hasPendingTokens());
     }
 
-    public function testHasPendingTokensMustReturnFalseWhenTokenStreamIsEmpty()
-    {
+    public function testHasPendingTokensMustReturnFalseWhenTokenStreamIsEmpty(): void {
         $ts = new TokenStream([]);
 
-        $this->assertFalse($ts->hasPendingTokens());
+        self::assertFalse($ts->hasPendingTokens());
     }
 
-    public function testHasPendingTokensMustReturnFalseAfterPointingToTheLastToken()
-    {
+    public function testHasPendingTokensMustReturnFalseAfterPointingToTheLastToken(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
         ]);
 
         $ts->moveNext();
 
-        $this->assertFalse($ts->hasPendingTokens());
+        self::assertFalse($ts->hasPendingTokens());
     }
 
-    public function testSkipWhileMustMovesPointerNTokensForwardUtilLastOneInstanceOfToken()
-    {
+    public function testSkipWhileMustMovesPointerNTokensForwardUtilLastOneInstanceOfToken(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('+', 'T_PLUS', 1),
@@ -242,11 +221,10 @@ class TokenStreamTest extends TestCase
 
         $ts->skipWhile('T_PLUS');
 
-        $this->assertTrue($ts->isNext('T_NUMBER'));
+        self::assertTrue($ts->isNext('T_NUMBER'));
     }
 
-    public function testSkipWhileAnyMustMovesPointerNTokensForwardUtilLastOneInstanceOfOneOfAnyTokens()
-    {
+    public function testSkipWhileAnyMustMovesPointerNTokensForwardUtilLastOneInstanceOfOneOfAnyTokens(): void {
         $ts = new TokenStream([
             new Token('+', 'T_PLUS', 1),
             new Token('+', 'T_PLUS', 1),
@@ -256,6 +234,6 @@ class TokenStreamTest extends TestCase
 
         $ts->skipWhileAny(['T_PLUS', 'T_MINUS']);
 
-        $this->assertTrue($ts->isNext('T_NUMBER'));
+        self::assertTrue($ts->isNext('T_NUMBER'));
     }
 }

@@ -20,7 +20,7 @@ composer require yosymfony/parser-utils
 First, you need to create a lexer. This one will recognize tokens
 
 ```php
-use Yosymfony\ParserUtils\BasicLexer;
+use Brunk\ParserUtils\BasicLexer;
 
 $lexer = new BasicLexer([
     '/^([0-9]+)/x' => 'T_NUMBER',
@@ -36,7 +36,7 @@ The `AbstractParser` class contains an abstract method called `parseImplementati
 that receives a `TokenStream` as an argument.
 
 ```php
-use Yosymfony\ParserUtils\AbstractParser;
+use Brunk\ParserUtils\AbstractParser;
 
 class Parser extends AbstractParser
 {

@@ -1,13 +1,13 @@
 <?php
 /*
- * This file is part of the Yosymfony\ParserUtils package.
+ * This file is part of the Brunk\ParserUtils package.
  *
  * (c) YoSymfony <http://github.com/yosymfony>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Yosymfony\ParserUtils;
+namespace Brunk\ParserUtils;
 
 class TokenStream implements TokenStreamInterface
 {
@@ -35,12 +35,22 @@ class TokenStream implements TokenStreamInterface
     /**
      * {@inheritdoc}
      */
+    public function peekNext() : ?Token
+    {
+        return $this->tokens[$this->index + 1] ?? null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function matchNext(string $tokenName) : string
     {
-        $token = $this->moveNext();
-        --$this->index;
+        $token = $this->peekNext();
 
-        if ($token->getName() == $tokenName) {
+        if (
+            $token !== null
+            && $token->getName() === $tokenName
+        ) {
             return $this->moveNext()->getValue();
         }
 
@@ -75,14 +85,13 @@ class TokenStream implements TokenStreamInterface
      */
     public function isNext(string $tokenName) : bool
     {
-        $token = $this->moveNext();
-        --$this->index;
+        $token = $this->peekNext();
 
         if ($token === null) {
             return false;
         }
 
-        return $token->getName() == $tokenName;
+        return $token->getName() === $tokenName;
     }
 
     /**
@@ -96,7 +105,7 @@ class TokenStream implements TokenStreamInterface
         foreach ($tokenNames as $tokenName) {
             $token = $this->moveNext();
 
-            if ($token === null || $token->getName() != $tokenName) {
+            if ($token === null || $token->getName() !== $tokenName) {
                 $result = false;
 
                 break;
@@ -113,17 +122,14 @@ class TokenStream implements TokenStreamInterface
      */
     public function isNextAny(array $tokenNames) : bool
     {
-        $token = $this->moveNext();
-        --$this->index;
+        $token = $this->peekNext();
 
         if ($token === null) {
             return false;
         }
 
-        foreach ($tokenNames as $tokenName) {
-            if ($tokenName === $token->getName()) {
-                return true;
-            }
+        if (in_array($token->getName(), $tokenNames, true)) {
+            return true;
         }
 
         return false;
@@ -146,7 +152,7 @@ class TokenStream implements TokenStreamInterface
     {
         $tokenCount = count($this->tokens);
 
-        if ($tokenCount == 0) {
+        if ($tokenCount === 0) {
             return false;
         }
 

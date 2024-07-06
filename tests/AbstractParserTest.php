@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the Yosymfony\ParserUtils package.
+ * This file is part of the Brunk\ParserUtils package.
  *
  * (c) YoSymfony <http://github.com/yosymfony>
  *
@@ -8,19 +8,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Yosymfony\ParserUtils\Test;
+namespace Brunk\ParserUtils\Test;
 
 use PHPUnit\Framework\TestCase;
-use Yosymfony\ParserUtils\AbstractParser;
-use Yosymfony\ParserUtils\BasicLexer;
-use Yosymfony\ParserUtils\SyntaxErrorException;
-use Yosymfony\ParserUtils\TokenStream;
+use Brunk\ParserUtils\AbstractParser;
+use Brunk\ParserUtils\BasicLexer;
+use Brunk\ParserUtils\SyntaxErrorException;
+use Brunk\ParserUtils\TokenStream;
 
 class AbstractParserTest extends TestCase
 {
     private $parser;
 
-    public function setup()
+    public function setup() : void
     {
         $lexer = new BasicLexer([
             '/^([0-9]+)/x' => 'T_NUMBER',
@@ -32,31 +32,31 @@ class AbstractParserTest extends TestCase
         $this->parser = $this->getMockBuilder(AbstractParser::class)
             ->setConstructorArgs([$lexer])
             ->getMockForAbstractClass();
-        $this->parser->expects($this->any())
+        $this->parser->expects(self::any())
             ->method('parseImplementation')
-            ->will($this->returnCallback(function (TokenStream $stream) {
-                $result = $stream->matchNext('T_NUMBER');
+            ->willReturnCallback(
+                function (TokenStream $stream) {
+                    $result = $stream->matchNext('T_NUMBER');
 
-                while ($stream->isNextAny(['T_PLUS', 'T_MINUS'])) {
-                    switch ($stream->moveNext()->getName()) {
-                        case 'T_PLUS':
-                            $result += $stream->matchNext('T_NUMBER');
-                            break;
-                        case 'T_MINUS':
-                            $result -= $stream->matchNext('T_NUMBER');
-                            break;
-                        default:
-                            throw new SyntaxErrorException("Something went wrong");
-                            break;
+                    while ($stream->isNextAny(['T_PLUS', 'T_MINUS'])) {
+                        switch ($stream->moveNext()->getName()) {
+                            case 'T_PLUS':
+                                $result += $stream->matchNext('T_NUMBER');
+                                break;
+                            case 'T_MINUS':
+                                $result -= $stream->matchNext('T_NUMBER');
+                                break;
+                            default:
+                                throw new SyntaxErrorException("Something went wrong");
+                        }
                     }
-                }
 
-                return $result;
-            }));
+                    return $result;
+                }
+            );
     }
 
-    public function testParseMustReturnTheResultOfTheSum()
-    {
-        $this->assertEquals(2, $this->parser->parse('1 + 1'));
+    public function testParseMustReturnTheResultOfTheSum(): void {
+        self::assertEquals(2, $this->parser->parse('1 + 1'));
     }
 }

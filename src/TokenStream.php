@@ -80,6 +80,10 @@ class TokenStream implements TokenStreamInterface
         }
     }
 
+    public function skip(int $count) : void {
+        $this->index += $count;
+    }
+
     /**
      * {@inheritdoc}
      */

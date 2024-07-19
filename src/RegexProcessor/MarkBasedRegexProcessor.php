@@ -12,9 +12,9 @@ class MarkBasedRegexProcessor implements RegexProcessorInterface {
     /**
      * @var string
      */
-    protected $compiledRegex;
-    protected $additionalModifiers = '';
-    protected $tokenIndex = [];
+    protected string $compiledRegex;
+    protected string $additionalModifiers = '';
+    protected array $tokenIndex = [];
 
     /**
      * @inheritDoc
@@ -36,7 +36,7 @@ class MarkBasedRegexProcessor implements RegexProcessorInterface {
         $regexes = [];
         $counter = 0;
         // map MARKs to integers to reduce memory used
-        // latter by preg_match
+        // later by preg_match
         foreach ($terminals as $regex => $token) {
             $regex = $this->cleanRegex($regex);
             $this->tokenIndex[$counter] = $token;
@@ -56,7 +56,7 @@ class MarkBasedRegexProcessor implements RegexProcessorInterface {
         $del_candidate = $regex[0];
 
         // Check for recognized delimiters
-        if  (strpos(self::RECOGNIZED_REGEX_DELIMITERS, $del_candidate) === false) {
+        if  (!str_contains(self::RECOGNIZED_REGEX_DELIMITERS, $del_candidate)) {
             return $regex;
         }
         $new_regex = $regex;

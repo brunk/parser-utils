@@ -11,7 +11,7 @@ namespace Brunk\ParserUtils;
 
 abstract class AbstractParser
 {
-    protected $lexer;
+    protected LexerInterface $lexer;
 
     /**
      * Constructor
@@ -30,8 +30,7 @@ abstract class AbstractParser
      *
      * @return mixed
      */
-    public function parse(string $input)
-    {
+    public function parse(string $input): mixed {
         $ts = $this->lexer->tokenize($input);
         $parseResult = $this->parseImplementation($ts);
 
@@ -49,5 +48,5 @@ abstract class AbstractParser
      *
      * @return mixed
      */
-    abstract protected function parseImplementation(TokenStream $stream);
+    abstract protected function parseImplementation(TokenStream $stream): mixed;
 }

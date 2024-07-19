@@ -7,11 +7,11 @@ use InvalidArgumentException;
 use Brunk\ParserUtils\RegexProcessor\RegexProcessorInterface;
 
 abstract class AbstractLexer implements LexerInterface {
-    protected $eosTokenName = 'T_EOS';
-    protected $activateEOSToken = false;
-    protected $newlineTokenName = 'T_NEWLINE';
-    protected $activateNewlineToken = false;
-    protected $regexProcessor = [];
+    protected string $eosTokenName = 'T_EOS';
+    protected bool $activateEOSToken = false;
+    protected string $newlineTokenName = 'T_NEWLINE';
+    protected bool $activateNewlineToken = false;
+    protected array|RegexProcessorInterface $regexProcessor = [];
 
     /**
      * Constructor
@@ -91,7 +91,7 @@ abstract class AbstractLexer implements LexerInterface {
     }
 
     /**
-     * @return array|\Brunk\ParserUtils\RegexProcessor\RegexProcessorInterface
+     * @return \Brunk\ParserUtils\RegexProcessor\RegexProcessorInterface
      */
     public function getRegexProcessor() : RegexProcessorInterface {
         return $this->regexProcessor;

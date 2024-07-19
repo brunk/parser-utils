@@ -11,9 +11,9 @@ namespace Brunk\ParserUtils;
 
 class Token
 {
-    protected $value;
-    protected $name;
-    protected $line;
+    protected string $value;
+    protected string $name;
+    protected int $line;
 
     /**
      * Constructor.

@@ -9,22 +9,20 @@
  */
 namespace Brunk\ParserUtils;
 
+use InvalidArgumentException;
+
 class BasicLexer implements LexerInterface
 {
-    protected $newlineTokenName = 'T_NEWLINE';
-    protected $eosTokenName = 'T_EOS';
-    protected $activateNewlineToken = false;
-    protected $activateEOSToken = false;
-    protected $terminals = [];
+    protected string $newlineTokenName = 'T_NEWLINE';
+    protected string $eosTokenName = 'T_EOS';
+    protected bool $activateNewlineToken = false;
+    protected bool $activateEOSToken = false;
+    protected array $terminals = [];
 
     /**
      * Constructor
      *
-     * @param array $terminal List of terminals
-     *  e.g:
-     *    [
-     *      "/^([)/" => "T_BRAKET_BEGIN"
-     *    ]
+     * @param array $terminals
      */
     public function __construct(array $terminals)
     {
@@ -66,8 +64,8 @@ class BasicLexer implements LexerInterface
      */
     public function setNewlineTokenName(string $name) : BasicLexer
     {
-        if (strlen($name) == 0) {
-            throw new \InvalidArgumentException('The name of the newline token must be not empty.');
+        if ($name === '') {
+            throw new InvalidArgumentException('The name of the newline token must be not empty.');
         }
 
         $this->newlineTokenName = $name;
@@ -86,8 +84,8 @@ class BasicLexer implements LexerInterface
      */
     public function setEosTokenName(string $name) : BasicLexer
     {
-        if (strlen($name) == 0) {
-            throw new \InvalidArgumentException('The name of the EOS token must be not empty.');
+        if ($name === '') {
+            throw new InvalidArgumentException('The name of the EOS token must be not empty.');
         }
 
         $this->eosTokenName = $name;
@@ -110,7 +108,7 @@ class BasicLexer implements LexerInterface
             $lineNumber = $number + 1;
 
             while ($offset < strlen($line)) {
-                list($name, $matches) = $this->match($line, $lineNumber, $offset);
+                [$name, $matches] = $this->match($line, $lineNumber, $offset);
 
                 if (isset($matches[1])) {
                     $token = new Token($matches[1], $name, $lineNumber);
@@ -127,6 +125,7 @@ class BasicLexer implements LexerInterface
         }
 
         if ($this->activateEOSToken) {
+            /** @noinspection PhpUndefinedVariableInspection */
             $tokens[] = new Token('', $this->eosTokenName, $lineNumber);
         }
 

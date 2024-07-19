@@ -14,9 +14,9 @@ interface RegexProcessorInterface {
      * Required setter but may be ignored in some processors
      *
      * @param string $additionalModifiers
-     * @return mixed
+     * @return void
      */
-    public function setAdditionalModifiers(string $additionalModifiers);
+    public function setAdditionalModifiers(string $additionalModifiers): void;
 
     /**
      * @param string $text full line of text to evaluate

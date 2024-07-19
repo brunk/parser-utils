@@ -11,13 +11,13 @@ namespace Brunk\ParserUtils;
 
 class TokenStream implements TokenStreamInterface
 {
-    protected $tokens;
-    protected $index = -1;
+    protected array $tokens;
+    protected int $index = -1;
 
     /**
      * Constructor
      *
-     * @param Token[] List of tokens
+     * @param Token[] $tokens List of tokens
      */
     public function __construct(array $tokens)
     {
@@ -33,7 +33,7 @@ class TokenStream implements TokenStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function peekNext() : ?Token
     {
@@ -51,7 +51,7 @@ class TokenStream implements TokenStreamInterface
             $token !== null
             && $token->getName() === $tokenName
         ) {
-            return $this->moveNext()->getValue();
+            return $this->moveNext()?->getValue();
         }
 
         throw new SyntaxErrorException(sprintf(

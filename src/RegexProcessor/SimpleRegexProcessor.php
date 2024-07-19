@@ -10,7 +10,7 @@ class SimpleRegexProcessor implements RegexProcessorInterface {
     /**
      * @var array
      */
-    private $terminals;
+    private array $terminals;
 
     /**
      * @inheritDoc
@@ -43,7 +43,7 @@ class SimpleRegexProcessor implements RegexProcessorInterface {
     /**
      * @inheritDoc
      */
-    public function setAdditionalModifiers(string $additionalModifiers) {
+    public function setAdditionalModifiers(string $additionalModifiers): void {
         // Ignore the value since modifiers are added to individual regex
     }
 }

@@ -249,4 +249,83 @@ class TokenStreamTest extends TestCase
 
         self::assertTrue($ts->isNext('T_MINUS'));
     }
+
+    public function testGetCurrentName(): void {
+        $ts = new TokenStream([
+            new Token('+', 'T_PLUS', 1),
+            new Token('+', 'T_PLUS', 1),
+            new Token('1', 'T_NUMBER', 1),
+        ]);
+
+        $this->assertNull($ts->getCurrentName());
+        $ts->moveNext();
+        $this->assertEquals('T_PLUS', $ts->getCurrentName());
+        $ts->moveNext();
+        $this->assertEquals('T_PLUS', $ts->getCurrentName());
+        $ts->moveNext();
+        $this->assertEquals('T_NUMBER', $ts->getCurrentName());
+    }
+
+    public function testGetCurrentValue(): void {
+        $ts = new TokenStream([
+            new Token('+', 'T_PLUS', 1),
+            new Token('+', 'T_PLUS', 1),
+            new Token('1', 'T_NUMBER', 1),
+        ]);
+
+        $this->assertNull($ts->getCurrentValue());
+        $ts->moveNext();
+        $this->assertEquals('+', $ts->getCurrentValue());
+        $ts->moveNext();
+        $this->assertEquals('+', $ts->getCurrentValue());
+        $ts->moveNext();
+        $this->assertEquals('1', $ts->getCurrentValue());
+    }
+
+    public function testGetNextName(): void {
+        $ts = new TokenStream([
+            new Token('+', 'T_PLUS', 1),
+            new Token('+', 'T_PLUS', 1),
+            new Token('1', 'T_NUMBER', 1),
+        ]);
+
+        $this->assertEquals('T_PLUS', $ts->getNextName());
+        $ts->moveNext();
+        $this->assertEquals('T_PLUS', $ts->getNextName());
+        $ts->moveNext();
+        $this->assertEquals('T_NUMBER', $ts->getNextName());
+        $ts->moveNext();
+        $this->assertNull($ts->getNextName());
+    }
+
+    public function testGetNextValue(): void {
+        $ts = new TokenStream([
+            new Token('+', 'T_PLUS', 1),
+            new Token('+', 'T_PLUS', 1),
+            new Token('1', 'T_NUMBER', 1),
+        ]);
+
+        $this->assertEquals('+', $ts->getNextValue());
+        $ts->moveNext();
+        $this->assertEquals('+', $ts->getNextValue());
+        $ts->moveNext();
+        $this->assertEquals('1', $ts->getNextValue());
+        $ts->moveNext();
+        $this->assertNull($ts->getNextValue());
+    }
+
+    public function testMoveNextGetValue(): void {
+        $ts = new TokenStream([
+            new Token('+', 'T_PLUS', 1),
+            new Token('+', 'T_PLUS', 1),
+            new Token('1', 'T_NUMBER', 1),
+        ]);
+
+        $this->assertEquals('+', $ts->moveNextGetValue());
+        $this->assertEquals('+', $ts->moveNextGetValue());
+        $this->assertEquals('1', $ts->moveNextGetValue());
+
+        $this->assertNull($ts->moveNextGetValue());
+    }
+
 }

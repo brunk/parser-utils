@@ -32,9 +32,10 @@ class TokenStream implements TokenStreamInterface
         return $this->tokens[++$this->index] ?? null;
     }
 
-    /**
-     * {}
-     */
+    public function peek (int $index) : ?Token {
+        return $this->tokens[$index] ?? null;
+    }
+
     public function peekNext() : ?Token
     {
         return $this->tokens[$this->index + 1] ?? null;
@@ -47,18 +48,15 @@ class TokenStream implements TokenStreamInterface
     {
         $token = $this->peekNext();
 
-        if (
-            $token !== null
-            && $token->getName() === $tokenName
-        ) {
+        if ($token?->getName() === $tokenName) {
             return $this->moveNext()?->getValue();
         }
 
         throw new SyntaxErrorException(sprintf(
             'Syntax error: expected token with name "%s" instead of "%s" at line %s.',
             $tokenName,
-            $token->getName(),
-            $token->getLine()
+            $token?->getName(),
+            $token?->getLine()
         ));
     }
 
@@ -103,22 +101,16 @@ class TokenStream implements TokenStreamInterface
      */
     public function isNextSequence(array $tokenNames) : bool
     {
-        $result = true;
-        $currentIndex = $this->index;
-
+        $currentIndex = $this->index + 1;
         foreach ($tokenNames as $tokenName) {
-            $token = $this->moveNext();
+            $token = $this->peek($currentIndex);
 
-            if ($token === null || $token->getName() !== $tokenName) {
-                $result = false;
-
-                break;
+            if ($token?->getName() !== $tokenName) {
+                return false;
             }
+            $currentIndex++;
         }
-
-        $this->index = $currentIndex;
-
-        return $result;
+        return true;
     }
 
     /**
@@ -169,5 +161,25 @@ class TokenStream implements TokenStreamInterface
     public function reset() : void
     {
         $this->index = -1;
+    }
+
+    public function getCurrentName () : ?string {
+        return ($this->tokens[$this->index] ?? null)?->getName();
+    }
+
+    public function getCurrentValue () : mixed {
+        return ($this->tokens[$this->index] ?? null)?->getValue();
+    }
+
+    public function getNextName () : ?string {
+        return $this->peekNext()?->getName();
+    }
+
+    public function getNextValue () : mixed {
+        return $this->peekNext()?->getValue();
+    }
+
+    public function moveNextGetValue () : ?string {
+        return $this->moveNext()?->getValue();
     }
 }
